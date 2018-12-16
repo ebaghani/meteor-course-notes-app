@@ -6,7 +6,7 @@ import NotFound from './../ui/NotFound';
 import Login from './../ui/Login';
 import { Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
-const history = createBrowserHistory();
+export const history = createBrowserHistory();
 
 const unauthenticatedPages = ['/', '/signup'];
 const authenticatedPages = ['/dashboard'];
@@ -32,6 +32,7 @@ export const routes = (
           <Route exact path="/" component={Login}/>
           <Route path="/signup" component={Signup}/>
           <Route path="/dashboard" component={Dashboard}/>
+		  <Route path="/dashboard/:id" component={Dashboard}/>
           <Route path="*" component={NotFound}/>
         </Switch>
     </Router>
