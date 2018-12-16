@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 import {Notes} from '../api/notes';
 import NoteListHeader from "./NoteListHeader";
 import NoteListItem from "./NoteListItem";
+import NoteListEmptyItem from "./NoteListEmptyItem";
 
 export const NoteList = (props) => {
     return (
@@ -22,13 +23,7 @@ export const NoteList = (props) => {
 renderNoteListItems = (props) => {
 
     if (props.notes.length === 0) {
-        return (
-            <div className="item">
-                <p  className="item__status-message">
-                    No Items Found.
-                </p>
-            </div>
-        );
+        return <NoteListEmptyItem />
     };
 
     return props.notes.map( (note) => {
