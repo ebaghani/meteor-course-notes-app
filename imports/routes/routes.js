@@ -29,19 +29,6 @@ export const onAuthChange = (isAuthenticated) => {
 	}
 }
 
-const onEnterPrivatePage = () => {
-	if (!Meteor.userId()) {
-	  browserHistory.replace('/');
-	}
-  };
-  const onEnterNotePage = (nextState) => {
-	if (!Meteor.userId()) {
-	  browserHistory.replace('/');
-	} else {
-	  Session.set('selectedNoteId', nextState.params.id);
-	}
-  };
-
 export const routes = (
 	<Router history={ history }>
 		<Switch>
@@ -50,6 +37,6 @@ export const routes = (
           <PrivateRoute path="/dashboard" component={Dashboard} exact={true}/>
 		 		  <NoteRoute path="/dashboard/:id" component={Dashboard}/>
           <Route path="*" component={NotFound}/>
-        </Switch>
-    </Router>
+    </Switch>
+  </Router>
 );

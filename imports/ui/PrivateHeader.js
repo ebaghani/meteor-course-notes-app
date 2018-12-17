@@ -5,6 +5,8 @@ import {Link} from "react-router-dom";
 import PropTypes from "prop-types";
 import {Accounts} from "meteor/accounts-base";
 import {createContainer} from "meteor/react-meteor-data";
+import { Session } from 'meteor/session';
+
 
 export const PrivateHeader = (props) => {
     return(
@@ -19,7 +21,10 @@ export const PrivateHeader = (props) => {
 
 export default createContainer(() => {
     return {
-        handleLogout: () => Accounts.logout()
+        handleLogout: () => {
+            Session.set('selectedNoteId', undefined);
+            Accounts.logout();
+        }
     };
 },
 PrivateHeader);
