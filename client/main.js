@@ -19,7 +19,7 @@ Tracker.autorun(() => {
 Tracker.autorun(() => {
   const selectedNoteId = Session.get('selectedNoteId');
   if (selectedNoteId) {
-    history.replace('/dashboard/${selectedNoteId}');
+    history.replace(`/dashboard/${selectedNoteId}`);
   }
 });
 

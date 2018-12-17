@@ -9,28 +9,36 @@ import {Notes} from '../api/notes';
 import NoteListHeader from "./NoteListHeader";
 import NoteListItem from "./NoteListItem";
 import NoteListEmptyItem from "./NoteListEmptyItem";
+import { Session } from 'meteor/session';
+
 
 export const NoteList = (props) => {
     return (
         <div>
-            <NoteListHeader/>
-            { renderNoteListItems(props) }
-            {/* NoteList {props.notes.length} */}
+          <NoteListHeader/>
+          { props.notes.length === 0 ? <NoteListEmptyItem/> : undefined }
+          {props.notes.map((note) => {
+            return <NoteListItem key={note._id} note={note}/>;
+          })}
+          NoteList { props.notes.length }
         </div>
-    )
+      );
 };
 
 renderNoteListItems = (props) => {
 
-    if (props.notes.length === 0) {
-        return <NoteListEmptyItem />
-    };
+  return (
+    <div>
+      <NoteListHeader/>
+      { props.notes.length === 0 ? <NoteListEmptyItem/> : undefined }
+      {props.notes.map((note) => {
+        return <NoteListItem key={note._id} note={note}/>;
+      })}
+      NoteList { props.notes.length }
+    </div>
+  );
 
-    return props.notes.map( (note) => {
-        //const shortUrl = Meteor.absoluteUrl(link._id);
-        return <NoteListItem key={note._id} note={note}/>
-       // return <p key={link._id}>{link.url}</p>;
-    });
+    
 };
 
 
@@ -39,8 +47,14 @@ NoteList.propTypes ={
 }
 
 export default createContainer( () => {
+    const selectedNoteId = Session.get('selectedNoteId');
       Meteor.subscribe('notes');
       return {
-          notes: Notes.find().fetch()
+          notes: Notes.find({}, { sort: { updatedAt : -1 } }).fetch().map( (note) => {
+              return {
+                ...note,
+                selected: selectedNoteId === note._id
+              };
+          })
       }
   }, NoteList);

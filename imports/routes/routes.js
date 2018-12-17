@@ -7,6 +7,9 @@ import Login from './../ui/Login';
 import { Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from 'history/createBrowserHistory';
 export const history = createBrowserHistory();
+import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
+import NoteRoute from './NoteRoute';
 
 const unauthenticatedPages = ['/', '/signup'];
 const authenticatedPages = ['/dashboard'];
@@ -26,13 +29,26 @@ export const onAuthChange = (isAuthenticated) => {
 	}
 }
 
+const onEnterPrivatePage = () => {
+	if (!Meteor.userId()) {
+	  browserHistory.replace('/');
+	}
+  };
+  const onEnterNotePage = (nextState) => {
+	if (!Meteor.userId()) {
+	  browserHistory.replace('/');
+	} else {
+	  Session.set('selectedNoteId', nextState.params.id);
+	}
+  };
+
 export const routes = (
 	<Router history={ history }>
 		<Switch>
-          <Route exact path="/" component={Login}/>
-          <Route path="/signup" component={Signup}/>
-          <Route path="/dashboard" component={Dashboard}/>
-		  <Route path="/dashboard/:id" component={Dashboard}/>
+          <PublicRoute exact path="/" component={Login}/>
+          <PublicRoute path="/signup" component={Signup}/>
+          <PrivateRoute path="/dashboard" component={Dashboard} exact={true}/>
+		 		  <NoteRoute path="/dashboard/:id" component={Dashboard}/>
           <Route path="*" component={NotFound}/>
         </Switch>
     </Router>

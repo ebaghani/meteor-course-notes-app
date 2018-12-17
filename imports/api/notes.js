@@ -39,39 +39,37 @@ Meteor.methods({
 
        Notes.remove({_id: _id, userId: this.userId});
     },
-    'notes.update'(_id, updates){
+    'notes.update'(_id, updates) {
         if (!this.userId) {
-            throw new Meteor.Error("Not Authorized");
+          throw new Meteor.Error('not-authorized');
         }
-
+    
         new SimpleSchema({
-            _id: {
-                type: String,
-                min: 1
-            },
-            title: {
-                type: String,
-                optional: true
-            },
-            body: {
-                type: String,
-                optional: true 
-            }
-            }).validate({
-                _id,
-                ...updates
-            });
-
-
-            Notes.upate({
-                _id,
-                userId: this.userId
-            }, 
-            {
-                $set: {
-                    updatedAt: moment().valueOf(),
-                    ...updates
-                } 
-            });
-    }
+          _id: {
+            type: String,
+            min: 1
+          },
+          title: {
+            type: String,
+            optional: true
+          },
+          body: {
+            type: String,
+            optional: true
+          }
+        }).validate({
+          _id,
+          ...updates
+        });
+    
+        Notes.update({
+          _id,
+          userId: this.userId
+        }, {
+          $set: {
+            updatedAt: moment().valueOf(),
+            ...updates
+          }
+        });
+      }
 });
