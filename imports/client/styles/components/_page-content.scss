@@ -1,8 +1,19 @@
 .page-content {
-    padding: $space;
+    padding: $large-space $space;
+    height: $page-content-height;
     display: flex;
-    flex-direction: column;
    // justify-content: space-between;
     max-width: $site-max-width;
     margin: 0 auto;
+}
+
+.page-content__sidebar {
+    display: flex;
+    width:  $page-content-sidebar-width;
+    padding-right: $large-space;
+}
+
+.page-content__main {
+    display: flex;
+    width : $page-content-main-width;
 }

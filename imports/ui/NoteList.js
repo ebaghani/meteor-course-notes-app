@@ -14,7 +14,7 @@ import { Session } from 'meteor/session';
 
 export const NoteList = (props) => {
     return (
-        <div>
+        <div className="item-List">
           <NoteListHeader/>
           { props.notes.length === 0 ? <NoteListEmptyItem/> : undefined }
           {props.notes.map((note) => {
