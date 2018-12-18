@@ -3,11 +3,9 @@ import React from "react";
 
 const NoteListEmptyItem = () => {
     return (
-        <div className="item">
-            <p  className="item__status-message">
-                No Notes Found.
+            <p  className="empty-item">
+                Create a note to get started!
             </p>
-        </div>
     );
 }
 
