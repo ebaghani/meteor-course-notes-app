@@ -9,9 +9,11 @@ import { Session } from 'meteor/session';
 
 
 export const PrivateHeader = (props) => {
+    const navImageSrc = props.isNavOpen ? '/images/x.svg' : '/images/bars.svg';
     return(
         <div className="title-bar">
             <div className="title-bar__content">
+            <img  className="header__nav-toggle" onClick={ () => { props.handleNavToggle() } } src={navImageSrc}/>
             <h1 className="header__title">{props.title}</h1>
             <button className="button--link-text" onClick={ () => { props.handleLogout()} }>Logout</button>
             </div>
@@ -21,9 +23,13 @@ export const PrivateHeader = (props) => {
 
 export default createContainer(() => {
     return {
+        isNavOpen : Session.get('isNavOpen'),
         handleLogout: () => {
             Session.set('selectedNoteId', undefined);
             Accounts.logout();
+        },
+        handleNavToggle: () => {
+            Session.set('isNavOpen', !Session.get('isNavOpen'));
         }
     };
 },
@@ -44,5 +50,8 @@ PrivateHeader);
 
 PrivateHeader.propTypes = {
     title: PropTypes.string.isRequired,
-    handleLogout: PropTypes.func.isRequired
+    handleLogout: PropTypes.func.isRequired,
+    isNavOpen : PropTypes.bool.isRequired,
+    handleNavToggle: PropTypes.func.isRequired,
+
   };

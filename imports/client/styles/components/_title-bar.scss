@@ -4,6 +4,7 @@
 }
 
 .title-bar__content {
+    align-items: center;
     padding-top: $space;
     display: flex;
     height: $header-height;
@@ -11,4 +12,14 @@
     justify-content: space-between;
     max-width: $site-max-width;
     margin: 0 auto;
+}
+
+.header__nav-toggle {
+    cursor: pointer;
+    height: 2rem;
+    width: 2rem;
+
+    @include desktop {
+        display: none;
+    }
 }
